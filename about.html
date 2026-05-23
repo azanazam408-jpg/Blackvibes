@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us | Black Vibes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== THEME VARIABLES ===== */
+    [data-theme="light"] {
+      --bg: #ffffff;
+      --bg-alt: #f8f6f2;
+      --bg-card: #ffffff;
+      --bg-nav: rgba(255,255,255,0.97);
+      --text-primary: #1a1a1a;
+      --text-secondary: #555;
+      --text-muted: #888;
+      --border: #e8e2d8;
+      --border-strong: #ccc;
+      --nav-border: #e8e2d8;
+      --announcement-bg: #1a1a1a;
+      --announcement-text: #ffffff;
+      --hero-overlay: rgba(0,0,0,0.52);
+      --footer-bg: #1a1a1a;
+      --footer-text: #888;
+      --feature-bg: #f8f6f2;
+      --shadow: rgba(0,0,0,0.06);
+      --shadow-hover: rgba(0,0,0,0.11);
+      --stat-bg: #f8f6f2;
+      --timeline-bg: #f8f6f2;
+    }
+    [data-theme="dark"] {
+      --bg: #0d0d0d;
+      --bg-alt: #141414;
+      --bg-card: #181818;
+      --bg-nav: rgba(10,10,10,0.97);
+      --text-primary: #f0ece4;
+      --text-secondary: #b0a898;
+      --text-muted: #666;
+      --border: #2a2a2a;
+      --border-strong: #3a3a3a;
+      --nav-border: #222;
+      --announcement-bg: #c59d5f;
+      --announcement-text: #1a1a1a;
+      --hero-overlay: rgba(0,0,0,0.72);
+      --footer-bg: #0a0a0a;
+      --footer-text: #555;
+      --feature-bg: #181818;
+      --shadow: rgba(0,0,0,0.4);
+      --shadow-hover: rgba(197,157,95,0.12);
+      --stat-bg: #181818;
+      --timeline-bg: #181818;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; }
+
+    /* ===== ANNOUNCEMENT ===== */
+    .announcement {
+      background: var(--announcement-bg);
+      color: var(--announcement-text);
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 12px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      width: 100%;
+      padding: 0 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-nav);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0; z-index: 1000;
+      border-bottom: 1px solid var(--nav-border);
+      height: 76px;
+      transition: all 0.4s ease;
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 600;
+      letter-spacing: 3px;
+      color: var(--text-primary);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .logo span { color: #c59d5f; }
+    nav ul { display: flex; gap: 36px; list-style: none; }
+    nav ul li a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 12.5px; letter-spacing: 1.5px;
+      text-transform: uppercase; font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      width: 0; height: 1px;
+      bottom: -4px; left: 0;
+      background: #c59d5f;
+      transition: 0.35s;
+    }
+    nav ul li a:hover::after, nav ul li a.active::after { width: 100%; }
+    nav ul li a:hover, nav ul li a.active { color: var(--text-primary); }
+
+    .nav-actions { display: flex; align-items: center; gap: 14px; }
+
+    /* THEME TOGGLE */
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 16px;
+      transition: all 0.3s ease;
+      position: relative; overflow: hidden;
+    }
+    .theme-toggle:hover { border-color: #c59d5f; transform: rotate(20deg); }
+    .theme-toggle .icon-sun,
+    .theme-toggle .icon-moon { position: absolute; transition: all 0.4s ease; }
+    [data-theme="light"] .icon-sun  { opacity:1; transform:translateY(0); }
+    [data-theme="light"] .icon-moon { opacity:0; transform:translateY(20px); }
+    [data-theme="dark"]  .icon-sun  { opacity:0; transform:translateY(-20px); }
+    [data-theme="dark"]  .icon-moon { opacity:1; transform:translateY(0); }
+
+    .btn {
+      background: var(--text-primary); color: var(--bg);
+      padding: 11px 26px;
+      border: 1.5px solid var(--text-primary);
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-size: 11.5px; letter-spacing: 2px;
+      text-transform: uppercase; font-weight: 500;
+      transition: all 0.3s ease;
+      text-decoration: none; display: inline-block;
+    }
+    .btn:hover { background: transparent; color: var(--text-primary); }
+
+    .btn-outline {
+      background: transparent; color: var(--text-primary);
+      border: 1.5px solid var(--border-strong);
+      padding: 13px 36px;
+      font-family: 'Jost', sans-serif;
+      font-size: 12px; letter-spacing: 2px;
+      text-transform: uppercase; cursor: pointer;
+      transition: all 0.3s; text-decoration: none; display: inline-block;
+    }
+    .btn-outline:hover { background: var(--text-primary); color: var(--bg); border-color: var(--text-primary); }
+
+    /* ===== HERO ===== */
+    .about-hero {
+      height: 100vh;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-hero img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 10s ease;
+    }
+    .about-hero:hover img { transform: scale(1.06); }
+    .about-hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--hero-overlay); z-index: 1;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; color: #fff;
+      padding: 0 8%;
+    }
+    .hero-eyebrow {
+      font-size: 11px; letter-spacing: 5px;
+      text-transform: uppercase; color: #c59d5f;
+      margin-bottom: 18px;
+      opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards;
+    }
+    .hero-content h1 {
+      font-size: 88px; font-weight: 300;
+      line-height: 1; color: #fff;
+      opacity: 0; animation: fadeUp 0.8s ease 0.5s forwards;
+    }
+    .hero-content h1 em { font-style: italic; color: #c59d5f; }
+    .hero-content p {
+      font-size: 17px; color: rgba(255,255,255,0.74);
+      margin-top: 20px; font-weight: 300;
+      max-width: 640px; margin-left: auto; margin-right: auto;
+      line-height: 1.8;
+      opacity: 0; animation: fadeUp 0.8s ease 0.7s forwards;
+    }
+    .hero-scroll {
+      position: absolute; bottom: 40px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 3; color: rgba(255,255,255,0.5);
+      font-size: 11px; letter-spacing: 3px;
+      text-transform: uppercase;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      opacity: 0; animation: fadeUp 0.8s ease 1.2s forwards;
+    }
+    .hero-scroll i { animation: bounce 2s infinite; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+      padding: 16px 8%;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+      font-size: 11.5px; letter-spacing: 1px;
+      color: var(--text-muted); text-transform: uppercase;
+    }
+    .breadcrumb a { color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+    .breadcrumb a:hover { color: #c59d5f; }
+    .breadcrumb span { color: #c59d5f; }
+
+    /* ===== SECTION COMMONS ===== */
+    .section-pad { padding: 100px 8%; }
+    .section-header { text-align: center; margin-bottom: 70px; }
+    .section-eyebrow {
+      font-size: 11px; letter-spacing: 4px;
+      text-transform: uppercase; color: #c59d5f; margin-bottom: 14px;
+    }
+    .section-header h2 {
+      font-size: 46px; font-weight: 300; color: var(--text-primary);
+    }
+    .section-header h2 em { font-style: italic; color: #c59d5f; }
+    .divider { width: 48px; height: 1px; background: #c59d5f; margin: 18px auto 0; }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 8%;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: var(--border);
+      max-width: 1100px; margin: 0 auto;
+    }
+    @media(max-width:700px) { .stats-grid { grid-template-columns: repeat(2,1fr); } }
+    .stat-card {
+      background: var(--stat-bg);
+      padding: 40px 30px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .stat-card:hover { background: var(--bg-card); box-shadow: 0 16px 48px var(--shadow-hover); }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px; font-weight: 300;
+      color: #c59d5f; line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-label {
+      font-size: 11px; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--text-muted);
+    }
+
+    /* ===== ABOUT STORY ===== */
+    .about-story { background: var(--bg); }
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1200px; margin: 0 auto;
+    }
+    @media(max-width:900px) { .story-grid { grid-template-columns: 1fr; gap: 40px; } }
+    .story-img-wrap {
+      position: relative;
+      overflow: hidden;
+      height: 580px;
+    }
+    .story-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+    .story-img-wrap:hover img { transform: scale(1.06); }
+    .story-img-accent {
+      position: absolute;
+      bottom: -2px; right: -2px;
+      width: 180px; height: 180px;
+      border: 2px solid #c59d5f;
+      pointer-events: none;
+    }
+    .story-text .section-eyebrow { text-align: left; }
+    .story-text h2 {
+      font-size: 50px; font-weight: 300;
+      color: var(--text-primary); line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .story-text h2 em { font-style: italic; color: #c59d5f; }
+    .story-text p {
+      font-size: 15px; color: var(--text-secondary);
+      line-height: 1.85; margin-bottom: 18px;
+    }
+    .story-text .divider { margin: 0 0 28px; }
+
+    /* ===== FEATURES ===== */
+    .features-section { background: var(--bg-alt); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2px;
+      background: var(--border);
+      max-width: 1300px; margin: 0 auto;
+    }
+    .feature-card {
+      background: var(--feature-bg);
+      padding: 44px 36px;
+      transition: all 0.35s ease;
+    }
+    .feature-card:hover {
+      background: var(--bg-card);
+      box-shadow: 0 20px 56px var(--shadow-hover);
+      transform: translateY(-4px);
+    }
+    .feature-icon {
+      width: 52px; height: 52px;
+      border: 1px solid var(--border-strong);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #c59d5f; font-size: 20px;
+      margin-bottom: 24px;
+      transition: all 0.3s;
+    }
+    .feature-card:hover .feature-icon {
+      background: #c59d5f; color: #fff; border-color: #c59d5f;
+    }
+    .feature-card h3 {
+      font-size: 24px; font-weight: 400;
+      color: var(--text-primary); margin-bottom: 14px;
+    }
+    .feature-card p {
+      font-size: 14px; color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    /* ===== TIMELINE ===== */
+    .timeline-section { background: var(--bg); }
+    .timeline {
+      max-width: 800px; margin: 0 auto;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: 0; bottom: 0;
+      width: 1px; background: var(--border);
+      transform: translateX(-50%);
+    }
+    @media(max-width:600px) { .timeline::before { left: 20px; } }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+      position: relative;
+    }
+    @media(max-width:600px) {
+      .timeline-item { grid-template-columns: 1fr; padding-left: 50px; gap: 8px; }
+    }
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      left: 50%; top: 12px;
+      width: 12px; height: 12px;
+      background: #c59d5f;
+      border-radius: 50%;
+      transform: translateX(-50%);
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 0 1px #c59d5f;
+    }
+    @media(max-width:600px) { .timeline-item::after { left: 16px; } }
+    .timeline-left { text-align: right; padding-right: 30px; }
+    .timeline-right { padding-left: 30px; }
+    @media(max-width:600px) {
+      .timeline-left { text-align: left; padding-right: 0; order: 2; }
+      .timeline-right { padding-left: 0; order: 1; }
+    }
+    .timeline-year {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px; font-weight: 300;
+      color: #c59d5f;
+    }
+    .timeline-right h4 {
+      font-size: 22px; font-weight: 400;
+      color: var(--text-primary); margin-bottom: 8px;
+    }
+    .timeline-right p {
+      font-size: 14px; color: var(--text-secondary); line-height: 1.75;
+    }
+
+    /* ===== TEAM ===== */
+    .team-section { background: var(--bg-alt); }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2px;
+      background: var(--border);
+      max-width: 1100px; margin: 0 auto;
+    }
+    .team-card {
+      background: var(--bg-card);
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+    .team-card:hover { box-shadow: 0 20px 56px var(--shadow-hover); }
+    .team-card .img-wrap {
+      height: 360px; overflow: hidden; position: relative;
+    }
+    .team-card img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top;
+      transition: transform 0.7s ease;
+    }
+    .team-card:hover img { transform: scale(1.06); }
+    .team-card-info {
+      padding: 24px 26px;
+      border-top: 1px solid var(--border);
+    }
+    .team-card-info h3 { font-size: 22px; font-weight: 400; color: var(--text-primary); margin-bottom: 4px; }
+    .team-card-info span {
+      font-size: 11px; letter-spacing: 2.5px;
+      text-transform: uppercase; color: #c59d5f;
+    }
+
+    /* ===== QUOTE STRIP ===== */
+    .quote-strip {
+      background: var(--text-primary);
+      padding: 90px 8%;
+      text-align: center;
+    }
+    .quote-strip blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 44px; font-weight: 300;
+      font-style: italic;
+      color: var(--bg);
+      max-width: 860px; margin: 0 auto;
+      line-height: 1.25;
+    }
+    .quote-strip blockquote em { color: #c59d5f; font-style: normal; }
+    .quote-strip cite {
+      display: block; margin-top: 28px;
+      font-size: 11px; letter-spacing: 3px;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      font-family: 'Jost', sans-serif; font-style: normal;
+    }
+    [data-theme="dark"] .quote-strip cite { color: rgba(0,0,0,0.4); }
+
+    /* ===== CTA BANNER ===== */
+    .cta-banner {
+      position: relative; overflow: hidden;
+      height: 460px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cta-banner img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 8s ease;
+    }
+    .cta-banner:hover img { transform: scale(1.05); }
+    .cta-banner::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 1;
+    }
+    .cta-content {
+      position: relative; z-index: 2;
+      text-align: center; color: #fff; padding: 0 8%;
+    }
+    .cta-content h2 {
+      font-size: 56px; font-weight: 300;
+      color: #fff; margin-bottom: 16px;
+    }
+    .cta-content h2 em { font-style: italic; color: #c59d5f; }
+    .cta-content p {
+      font-size: 16px; color: rgba(255,255,255,0.72);
+      margin-bottom: 36px; font-weight: 300;
+    }
+    .btn-white {
+      background: #fff; color: #1a1a1a;
+      padding: 14px 38px;
+      border: 2px solid #fff;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-size: 12px; letter-spacing: 2px;
+      text-transform: uppercase; font-weight: 500;
+      transition: all 0.3s; text-decoration: none; display: inline-block;
+    }
+    .btn-white:hover { background: transparent; color: #fff; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--footer-bg);
+      padding: 80px 8% 30px;
+    }
+    .footer-content {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px; margin-bottom: 60px;
+    }
+    @media(max-width:900px) { .footer-content { grid-template-columns: 1fr 1fr; } }
+    @media(max-width:540px) { .footer-content { grid-template-columns: 1fr; gap:40px; } }
+    .footer-col h3 {
+      font-size: 15px; font-weight: 400;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: #fff; margin-bottom: 22px;
+    }
+    .footer-col h3 span { color: #c59d5f; }
+    .footer-col p { color: var(--footer-text); line-height: 1.8; font-size: 13.5px; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 11px; }
+    .footer-col ul li a {
+      color: var(--footer-text); text-decoration: none;
+      font-size: 13.5px; letter-spacing: 0.5px; transition: color 0.3s;
+    }
+    .footer-col ul li a:hover { color: #fff; }
+    .footer-social { display: flex; gap: 14px; margin-top: 22px; }
+    .footer-social a {
+      color: var(--footer-text); font-size: 17px;
+      transition: color 0.3s; text-decoration: none;
+    }
+    .footer-social a:hover { color: #c59d5f; }
+    .footer-bottom {
+      border-top: 1px solid #252525;
+      padding-top: 26px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bottom p { color: #383838; font-size: 12px; letter-spacing: 1px; }
+
+    /* ===== FLOATING WHATSAPP ===== */
+    .floating-btn {
+      position: fixed; bottom: 30px; right: 30px;
+      background: #25D366; color: #fff;
+      width: 54px; height: 54px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; text-decoration: none;
+      box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+      z-index: 9999; transition: 0.3s;
+    }
+    .floating-btn:hover { transform: scale(1.12); }
+
+    /* ===== REVEAL ===== */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:900px) {
+      nav ul { display: none; }
+      .hero-content h1 { font-size: 52px; }
+    }
+    @media(max-width:540px) {
+      .hero-content h1 { font-size: 38px; }
+      .quote-strip blockquote { font-size: 30px; }
+      .cta-content h2 { font-size: 38px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ANNOUNCEMENT BAR -->
+  <div class="announcement">
+    ✦ &nbsp; New Collection 2026 — Now Live &nbsp;—&nbsp; <strong>Free Shipping Over PKR 3,000</strong> &nbsp; ✦
+  </div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="index.html" class="logo">BLACK <span>VIBES</span></a>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="collection.html">Collection</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+        <i class="fa-solid fa-sun icon-sun"></i>
+        <i class="fa-solid fa-moon icon-moon"></i>
+      </button>
+      <button class="btn" onclick="window.location='collection.html'">Shop Now</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=1974&auto=format&fit=crop" alt="About Hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Est. 2024 — Lahore, Pakistan</p>
+      <h1>About <em>Black Vibes</em></h1>
+      <p>More than fashion — it is confidence, elegance, and luxury designed for powerful women who dare to stand apart.</p>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="index.html">Home</a>
+    <i class="fa-solid fa-chevron-right" style="font-size:9px;"></i>
+    <span>About Us</span>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-grid reveal">
+      <div class="stat-card">
+        <div class="stat-number" id="stat1">0</div>
+        <div class="stat-label">Happy Customers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat2">0</div>
+        <div class="stat-label">Pieces Sold</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat3">0</div>
+        <div class="stat-label">Collections</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat4">0</div>
+        <div class="stat-label">Cities Served</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORY SECTION -->
+  <section class="about-story section-pad">
+    <div class="story-grid reveal">
+      <div class="story-img-wrap">
+        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1974&auto=format&fit=crop" alt="Our Story">
+        <div class="story-img-accent"></div>
+      </div>
+      <div class="story-text">
+        <p class="section-eyebrow">Our Story</p>
+        <h2>Luxury Fashion <em>Experience</em></h2>
+        <div class="divider"></div>
+        <p style="margin-top:24px;">
+          Black Vibes was born from a single belief — that every Pakistani woman deserves to feel extraordinary. Founded in Lahore in 2024, we set out to redefine women's fashion with unique collections that blend modern trends with timeless elegance.
+        </p>
+        <p>
+          Our mission is to craft pieces that don't just look stunning — they make you feel unstoppable. From the first stitch to the final delivery, every detail is handled with care, passion, and an obsession for quality.
+        </p>
+        <p>
+          We combine bold aesthetics with luxury fabrics, creating a shopping experience that feels as premium as the clothes themselves.
+        </p>
+        <a href="collection.html" class="btn" style="margin-top:12px;">Explore the Collection</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features-section section-pad">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">Why Us</p>
+      <h2>Why Choose <em>Black Vibes</em></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="features-grid reveal">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-gem"></i></div>
+        <h3>Premium Quality</h3>
+        <p>High-quality fabrics and luxury finishing designed for elegance, comfort, and longevity in every piece.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-star"></i></div>
+        <h3>Modern Style</h3>
+        <p>Trendy and timeless collections inspired by modern global fashion culture with a uniquely Pakistani soul.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
+        <h3>Fast Delivery</h3>
+        <p>Safe and swift nationwide shipping so your new look arrives right when you need it, every time.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3>Secure Shopping</h3>
+        <p>Trusted payment methods and complete customer support so you shop with total peace of mind.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-rotate-left"></i></div>
+        <h3>Easy Returns</h3>
+        <p>Hassle-free return and exchange policy because your complete satisfaction is our top priority.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-headset"></i></div>
+        <h3>24/7 Support</h3>
+        <p>Our team is always available on WhatsApp and email to help you with any question or concern.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="timeline-section section-pad">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">Our Journey</p>
+      <h2>The Black Vibes <em>Story</em></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-left">
+          <div class="timeline-year">2024</div>
+        </div>
+        <div class="timeline-right">
+          <h4>The Beginning</h4>
+          <p>Black Vibes is founded in Lahore with a vision to bring luxury women's fashion to Pakistan at accessible prices.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-left">
+          <div class="timeline-year">2025</div>
+        </div>
+        <div class="timeline-right">
+          <h4>First Major Collection</h4>
+          <p>Launch of our flagship Festive Edit — selling out within 72 hours and reaching customers across 10 cities.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-left">
+          <div class="timeline-year">2026</div>
+        </div>
+        <div class="timeline-right">
+          <h4>Going National</h4>
+          <p>Expansion to nationwide shipping, launch of our online store, and a growing community of 5,000+ loyal customers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE STRIP -->
+  <div class="quote-strip">
+    <blockquote>
+      "Fashion is not just what you wear — it is how you <em>show up</em> for yourself."
+    </blockquote>
+    <cite>— The Black Vibes Manifesto</cite>
+  </div>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner">
+    <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1400" alt="CTA">
+    <div class="cta-content">
+      <h2>Discover the <em>Collection</em></h2>
+      <p>Shop the latest pieces — designed for the woman who commands every room.</p>
+      <a href="collection.html" class="btn-white">Shop Now</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-col">
+        <h3>Black <span>Vibes</span></h3>
+        <p>Luxury women's fashion brand bringing confidence, elegance, and premium style to modern Pakistan.</p>
+        <div class="footer-social">
+          <a href="https://wa.me/923196180549" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://www.instagram.com/black.vibes.25/" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@aliyansam3" target="_blank"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61589344725862" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>Shop</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="collection.html">Collection</a></li>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Sale</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Blogs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Help</h3>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+          <li><a href="#">Returns</a></li>
+          <li><a href="#">Track Order</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Black Vibes — All Rights Reserved</p>
+      <p>Crafted with passion in Pakistan</p>
+    </div>
+  </footer>
+
+  <!-- FLOATING WHATSAPP -->
+  <a href="https://wa.me/923196180549" target="_blank" class="floating-btn" title="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <script>
+    // ===== THEME =====
+    const html = document.documentElement;
+    const saved = localStorage.getItem('bv-theme') || 'light';
+    html.setAttribute('data-theme', saved);
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('bv-theme', next);
+    });
+
+    // ===== ANIMATED COUNTERS =====
+    const counters = [
+      { id: 'stat1', target: 5000, suffix: '+' },
+      { id: 'stat2', target: 12000, suffix: '+' },
+      { id: 'stat3', target: 8, suffix: '' },
+      { id: 'stat4', target: 15, suffix: '+' }
+    ];
+    let counted = false;
+
+    function runCounters() {
+      if (counted) return;
+      counted = true;
+      counters.forEach(c => {
+        const el = document.getElementById(c.id);
+        let start = 0;
+        const step = c.target / 60;
+        const timer = setInterval(() => {
+          start += step;
+          if (start >= c.target) {
+            el.textContent = c.target.toLocaleString() + c.suffix;
+            clearInterval(timer);
+          } else {
+            el.textContent = Math.floor(start).toLocaleString() + c.suffix;
+          }
+        }, 25);
+      });
+    }
+
+    // ===== SCROLL REVEAL =====
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          // Trigger counter when stats come into view
+          if (e.target.closest('.stats-bar')) runCounters();
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

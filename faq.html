@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQ | Black Vibes</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo.jpg">
+
+  <style>
+    /* ===== THEME VARIABLES ===== */
+    :root {
+      --gold: #c59d5f;
+      --gold-light: #d4b07a;
+    }
+
+    [data-theme="light"] {
+      --bg: #ffffff;
+      --bg-alt: #f8f6f2;
+      --bg-card: #ffffff;
+      --bg-nav: rgba(255,255,255,0.97);
+      --text-primary: #1a1a1a;
+      --text-secondary: #555;
+      --text-muted: #888;
+      --border: #e8e2d8;
+      --border-strong: #ccc;
+      --shadow: rgba(0,0,0,0.06);
+      --shadow-hover: rgba(0,0,0,0.12);
+      --loader-bg: #ffffff;
+      --footer-bg: #1a1a1a;
+      --footer-text: #aaa;
+      --nav-border: #e8e2d8;
+      --overlay: rgba(0,0,0,0.55);
+      --announcement: #1a1a1a;
+      --announcement-text: #ffffff;
+      --faq-bg: #f8f6f2;
+      --faq-card: #ffffff;
+      --faq-card-hover-shadow: rgba(197,157,95,0.13);
+      --faq-answer-text: #555;
+      --icon-line: #1a1a1a;
+    }
+
+    [data-theme="dark"] {
+      --bg: #0d0d0d;
+      --bg-alt: #141414;
+      --bg-card: #181818;
+      --bg-nav: rgba(10,10,10,0.97);
+      --text-primary: #f0ece4;
+      --text-secondary: #c0b8aa;
+      --text-muted: #888;
+      --border: #2a2a2a;
+      --border-strong: #3a3a3a;
+      --shadow: rgba(0,0,0,0.4);
+      --shadow-hover: rgba(197,157,95,0.15);
+      --loader-bg: #0d0d0d;
+      --footer-bg: #0a0a0a;
+      --footer-text: #666;
+      --nav-border: #222;
+      --overlay: rgba(0,0,0,0.75);
+      --announcement: #c59d5f;
+      --announcement-text: #1a1a1a;
+      --faq-bg: #0d0d0d;
+      --faq-card: #141414;
+      --faq-card-hover-shadow: rgba(197,157,95,0.18);
+      --faq-answer-text: #c0b8aa;
+      --icon-line: #f0ece4;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+    h1, h2, h3 { font-family: 'Cormorant Garamond', serif; }
+
+    /* ===== CUSTOM CURSOR ===== */
+    .custom-cursor {
+      position: fixed;
+      width: 20px; height: 20px;
+      border: 1.5px solid var(--gold);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: all 0.12s ease;
+      display: none;
+    }
+    @media (min-width: 1024px) { .custom-cursor { display: block; } }
+
+    /* ===== LOADER ===== */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--loader-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      transition: opacity 1s ease;
+    }
+    .loader-content { text-align: center; }
+    .loader-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 56px;
+      font-weight: 300;
+      color: var(--text-primary);
+      letter-spacing: 8px;
+      margin-bottom: 12px;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    .loader-logo span { color: var(--gold); }
+    .loader-sub {
+      font-size: 11px;
+      letter-spacing: 5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+    .loader-line {
+      width: 0; height: 1px;
+      background: var(--gold);
+      margin: 20px auto;
+      animation: lineExpand 1.6s ease 0.3s forwards;
+    }
+    @keyframes lineExpand { to { width: 100px; } }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== ANNOUNCEMENT BAR ===== */
+    .announcement {
+      background: var(--announcement);
+      color: var(--announcement-text);
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 12.5px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      width: 100%;
+      padding: 0 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-nav);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--nav-border);
+      transition: all 0.4s ease;
+      height: 76px;
+    }
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      color: var(--text-primary);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .logo span { color: var(--gold); }
+    nav ul {
+      display: flex;
+      gap: 38px;
+      list-style: none;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      width: 0; height: 1px;
+      bottom: -4px; left: 0;
+      background: var(--gold);
+      transition: 0.35s;
+    }
+    nav ul li a:hover::after { width: 100%; }
+    nav ul li a:hover { color: var(--text-primary); }
+    nav ul li a.active { color: var(--gold); }
+    nav ul li a.active::after { width: 100%; }
+
+    .nav-actions { display: flex; align-items: center; gap: 14px; }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .theme-toggle:hover {
+      border-color: var(--gold);
+      background: var(--bg-alt);
+      transform: rotate(20deg);
+    }
+    .theme-toggle .icon-sun,
+    .theme-toggle .icon-moon {
+      position: absolute;
+      transition: all 0.4s ease;
+    }
+    [data-theme="light"] .icon-sun  { opacity: 1; transform: translateY(0); }
+    [data-theme="light"] .icon-moon { opacity: 0; transform: translateY(20px); }
+    [data-theme="dark"]  .icon-sun  { opacity: 0; transform: translateY(-20px); }
+    [data-theme="dark"]  .icon-moon { opacity: 1; transform: translateY(0); }
+
+    .btn {
+      background: var(--text-primary);
+      color: var(--bg);
+      padding: 11px 26px;
+      border: 1.5px solid var(--text-primary);
+      border-radius: 0;
+      cursor: pointer;
+      font-weight: 500;
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn:hover {
+      background: transparent;
+      color: var(--text-primary);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 1.5px;
+      background: var(--text-primary);
+      transition: 0.3s;
+    }
+    @media(max-width:900px) {
+      nav ul { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ===== FAQ HERO ===== */
+    .faq-hero {
+      position: relative;
+      height: 52vh;
+      min-height: 340px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .faq-hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      transition: transform 8s ease;
+    }
+    .faq-hero:hover img { transform: scale(1.04); }
+    .faq-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.30) 60%, transparent 100%);
+    }
+    .faq-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 60px 8%;
+      color: #fff;
+    }
+    .faq-hero-content .eyebrow {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+      display: block;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+    .faq-hero-content h1 {
+      font-size: 72px;
+      font-weight: 300;
+      line-height: 1;
+      color: #fff;
+      animation: fadeInUp 0.8s ease 0.4s both;
+    }
+    .faq-hero-content h1 em { font-style: italic; color: var(--gold); }
+    .faq-hero-content p {
+      margin-top: 16px;
+      font-size: 15px;
+      color: rgba(255,255,255,0.75);
+      max-width: 480px;
+      line-height: 1.7;
+      animation: fadeInUp 0.8s ease 0.6s both;
+    }
+    @media(max-width:700px) {
+      .faq-hero-content h1 { font-size: 46px; }
+      .faq-hero { height: 46vh; }
+    }
+
+    /* ===== FAQ SECTION ===== */
+    .faq-section {
+      background: var(--faq-bg);
+      padding: 100px 8%;
+      transition: background 0.4s ease;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 70px;
+    }
+    .section-eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .section-header h2 {
+      font-size: 46px;
+      font-weight: 300;
+      color: var(--text-primary);
+      line-height: 1.1;
+    }
+    .section-header h2 em { font-style: italic; color: var(--gold); }
+    .divider {
+      width: 50px; height: 1px;
+      background: var(--gold);
+      margin: 20px auto 0;
+    }
+
+    /* ===== FAQ CATEGORIES TABS ===== */
+    .faq-tabs {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 56px;
+    }
+    .faq-tab {
+      background: none;
+      border: 1px solid var(--border-strong);
+      color: var(--text-muted);
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 10px 22px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .faq-tab:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .faq-tab.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #fff;
+    }
+
+    /* ===== FAQ ACCORDION ===== */
+    .faq-container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .faq-group {
+      display: none;
+    }
+    .faq-group.active {
+      display: block;
+      animation: fadeInUp 0.5s ease both;
+    }
+
+    .faq-item {
+      background: var(--faq-card);
+      border: 1px solid var(--border);
+      margin-bottom: 2px;
+      overflow: hidden;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    .faq-item:hover {
+      box-shadow: 0 8px 40px var(--faq-card-hover-shadow);
+    }
+    .faq-item.open {
+      border-color: rgba(197,157,95,0.35);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      padding: 28px 32px;
+      font-family: 'Jost', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      transition: color 0.3s;
+    }
+    .faq-question:hover { color: var(--gold); }
+    .faq-item.open .faq-question { color: var(--gold); }
+
+    /* ===== ANIMATED PLUS/MINUS ICON ===== */
+    .faq-icon {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+    .faq-icon::before,
+    .faq-icon::after {
+      content: '';
+      position: absolute;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: all 0.4s ease;
+    }
+    .faq-icon::before {
+      /* horizontal bar */
+      width: 14px; height: 1.5px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .faq-icon::after {
+      /* vertical bar */
+      width: 1.5px; height: 14px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .faq-item.open .faq-icon::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+      opacity: 0;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .faq-item.open .faq-answer {
+      max-height: 400px;
+    }
+    .faq-answer-inner {
+      padding: 0 32px 32px;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+    .faq-answer-inner p {
+      color: var(--faq-answer-text);
+      line-height: 1.9;
+      font-size: 14.5px;
+    }
+
+    /* ===== CONTACT STRIP ===== */
+    .faq-contact-strip {
+      margin-top: 80px;
+      background: var(--text-primary);
+      padding: 70px 8%;
+      text-align: center;
+      color: var(--bg);
+    }
+    .faq-contact-strip h2 {
+      font-size: 40px;
+      font-weight: 300;
+      margin-bottom: 14px;
+      color: var(--bg);
+    }
+    .faq-contact-strip h2 em { font-style: italic; color: var(--gold); }
+    .faq-contact-strip p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 36px;
+      letter-spacing: 0.4px;
+    }
+    [data-theme="dark"] .faq-contact-strip p { color: rgba(0,0,0,0.55); }
+    .contact-options {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 30px;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      background: transparent;
+      color: #fff;
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .contact-btn:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .contact-btn i { font-size: 16px; }
+
+    /* ===== FLOATING WHATSAPP ===== */
+    .floating-btn {
+      position: fixed;
+      bottom: 30px; right: 30px;
+      background: #25D366;
+      color: white;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+      z-index: 9999;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+    .floating-btn:hover { transform: scale(1.12); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--footer-bg);
+      padding: 80px 8% 30px;
+    }
+    .footer-content {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+    @media(max-width:900px) { .footer-content { grid-template-columns: 1fr 1fr; } }
+    @media(max-width:540px) { .footer-content { grid-template-columns: 1fr; gap: 40px; } }
+    .footer-col h3 {
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    .footer-col h3 span { color: var(--gold); }
+    .footer-col p {
+      color: var(--footer-text);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 12px; }
+    .footer-col ul li a {
+      color: var(--footer-text);
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      transition: color 0.3s;
+    }
+    .footer-col ul li a:hover { color: #fff; }
+    .social-links { display: flex; gap: 16px; }
+    .social-links a {
+      color: var(--footer-text);
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+    .social-links a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid #2a2a2a;
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p { color: #444; font-size: 12px; letter-spacing: 1px; }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:600px) {
+      .faq-question { padding: 22px 20px; font-size: 14px; }
+      .faq-answer-inner { padding: 0 20px 24px; padding-top: 20px; }
+      .section-header h2 { font-size: 36px; }
+      .faq-contact-strip h2 { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CUSTOM CURSOR -->
+  <div class="custom-cursor" id="cursor"></div>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-content">
+      <div class="loader-logo">BLACK <span>VIBES</span></div>
+      <div class="loader-line"></div>
+      <p class="loader-sub">Premium Women's Fashion</p>
+    </div>
+  </div>
+
+  <!-- ANNOUNCEMENT BAR -->
+  <div class="announcement">
+    ✦ &nbsp; Festive Edit Vol. 4 is Live &nbsp;—&nbsp; <strong>30% Off Sitewide</strong> &nbsp;—&nbsp; Free Shipping Over PKR 3,000 &nbsp; ✦
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="index.html" class="logo">BLACK <span>VIBES</span></a>
+
+    <ul id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="collection.html">Collection</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html" class="active">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" title="Toggle Theme" aria-label="Toggle dark/light mode">
+        <i class="fa-solid fa-sun icon-sun"></i>
+        <i class="fa-solid fa-moon icon-moon"></i>
+      </button>
+      <a href="collection.html" class="btn">Shop Now</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- FAQ HERO -->
+  <section class="faq-hero">
+    <img
+      src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1600&auto=format&fit=crop"
+      alt="Black Vibes FAQ"
+      loading="eager"
+    >
+    <div class="faq-hero-overlay"></div>
+    <div class="faq-hero-content">
+      <span class="eyebrow">Support & Information</span>
+      <h1>Frequently <em>Asked</em><br>Questions</h1>
+      <p>Everything you need to know about shopping with Black Vibes — answered with care.</p>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section class="faq-section">
+
+    <div class="section-header reveal">
+      <p class="section-eyebrow">We're Here to Help</p>
+      <h2>Find Your <em>Answer</em></h2>
+      <div class="divider"></div>
+    </div>
+
+    <!-- TABS -->
+    <div class="faq-tabs reveal">
+      <button class="faq-tab active" data-target="all">All</button>
+      <button class="faq-tab" data-target="orders">Orders</button>
+      <button class="faq-tab" data-target="shipping">Shipping</button>
+      <button class="faq-tab" data-target="returns">Returns</button>
+      <button class="faq-tab" data-target="products">Products</button>
+    </div>
+
+    <!-- FAQ ACCORDION -->
+    <div class="faq-container reveal">
+
+      <!-- ALL GROUP -->
+      <div class="faq-group active" id="all">
+
+        <div class="faq-item">
+          <button class="faq-question">
+            What products does Black Vibes offer?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Black Vibes offers a premium range of women's fashion including luxury dresses, silk sets, tailored blazers, elegant casual wear, and curated seasonal collections — all designed for the modern woman who values quality and style.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            How can I place an order?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Browse our collection, select your size and preferred item, then click <strong>Add to Cart</strong>. Once ready, proceed to checkout and complete your payment. You'll receive a confirmation message via WhatsApp or email shortly after.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Do you provide worldwide shipping?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Yes — Black Vibes ships worldwide. Domestic Pakistan orders typically arrive within 3–5 business days. International orders may take 7–14 business days depending on the destination. Tracking information is shared upon dispatch.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Can I return or exchange a product?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Absolutely. We accept returns and exchanges within 7 days of delivery, provided the item is unused, in its original condition, and with all tags attached. Simply reach out to us via WhatsApp or email to initiate the process.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Are the sizes true to fit?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Our pieces are designed with a refined, contemporary silhouette in mind. We recommend consulting the size guide available on each product page for the most accurate fit. If you're between sizes, we suggest sizing up for a more relaxed drape.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            What payment methods do you accept?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>We accept cash on delivery (COD) across Pakistan, as well as bank transfers, JazzCash, and EasyPaisa. International customers can pay via PayPal or credit/debit card through our secure checkout.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            How do I track my order?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Once your order is dispatched, you will receive a tracking number via WhatsApp or SMS. You can use this number on the courier's website to follow your parcel in real time. For any delays, our support team is always ready to assist.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Why choose Black Vibes?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Black Vibes is more than fashion — it's an experience. We combine premium fabrics, thoughtful tailoring, and modern aesthetics to deliver pieces that make every woman feel extraordinary. From packaging to delivery, every detail is crafted with care.</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /all -->
+
+      <!-- ORDERS GROUP -->
+      <div class="faq-group" id="orders">
+
+        <div class="faq-item">
+          <button class="faq-question">
+            How can I place an order?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Browse our collection, select your size and preferred item, then click <strong>Add to Cart</strong>. Once ready, proceed to checkout and complete your payment. You'll receive a confirmation message via WhatsApp or email shortly after.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            What payment methods do you accept?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>We accept cash on delivery (COD) across Pakistan, as well as bank transfers, JazzCash, and EasyPaisa. International customers can pay via PayPal or credit/debit card through our secure checkout.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            How do I track my order?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Once your order is dispatched, you will receive a tracking number via WhatsApp or SMS. You can use this number on the courier's website to follow your parcel in real time.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Can I cancel or modify my order after placing it?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Orders can be cancelled or modified within 24 hours of placement. After that window, the order may already be in processing or dispatch. Please contact us immediately on WhatsApp at +92-319-6180549 if you need to make any changes.</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /orders -->
+
+      <!-- SHIPPING GROUP -->
+      <div class="faq-group" id="shipping">
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Do you provide worldwide shipping?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Yes — Black Vibes ships worldwide. Domestic Pakistan orders typically arrive within 3–5 business days. International orders may take 7–14 business days depending on the destination.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Is there a minimum order for free shipping?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Yes — domestic orders over PKR 3,000 qualify for free standard shipping across Pakistan. International shipping charges are calculated at checkout based on destination and package weight.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            What courier services do you use?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>We work with reliable courier partners including TCS, Leopards, and DHL for international shipments. All parcels are dispatched with care and professional packaging to ensure your order arrives in perfect condition.</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /shipping -->
+
+      <!-- RETURNS GROUP -->
+      <div class="faq-group" id="returns">
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Can I return or exchange a product?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>We accept returns and exchanges within 7 days of delivery, provided the item is unused, in its original condition, and with all tags attached. Simply reach out to us via WhatsApp or email to initiate the process.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            How long does it take to process a refund?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Once we receive and inspect your returned item, refunds are processed within 3–5 business days. The amount is transferred back to your original payment method or as store credit, as preferred.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Are sale items eligible for return?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Sale and discounted items are generally final sale and not eligible for return or exchange unless they arrive damaged or defective. Please check the individual product listing for specific return eligibility.</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /returns -->
+
+      <!-- PRODUCTS GROUP -->
+      <div class="faq-group" id="products">
+
+        <div class="faq-item">
+          <button class="faq-question">
+            What products does Black Vibes offer?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>We offer luxury dresses, silk sets, tailored blazers, elegant casual wear, and curated seasonal collections — all designed for the modern woman who values quality and style.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Are the sizes true to fit?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Our pieces are designed with a refined, contemporary silhouette. We recommend consulting the size guide on each product page. If you're between sizes, we suggest sizing up for a more relaxed drape.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            What fabrics do you use?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>We source premium quality fabrics including pure silk, georgette, chiffon, and high-grade cotton blends. Every material is carefully selected for comfort, drape, and longevity. Fabric details are listed on each product page.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            How should I care for my Black Vibes pieces?
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              <p>Most of our silk and delicate pieces are recommended for dry cleaning or gentle hand wash in cold water. Avoid wringing or machine drying. Specific care instructions are included on the label of each garment.</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /products -->
+
+    </div><!-- /faq-container -->
+
+    <!-- CONTACT STRIP -->
+    <div class="faq-contact-strip reveal">
+      <h2>Still Have a <em>Question?</em></h2>
+      <p>Our team is available 7 days a week — reach out anytime.</p>
+      <div class="contact-options">
+        <a href="https://wa.me/923196180549" target="_blank" class="contact-btn">
+          <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+        </a>
+        <a href="mailto:cs@blackvibes.com" class="contact-btn">
+          <i class="fa-regular fa-envelope"></i> Email Us
+        </a>
+        <a href="contact.html" class="contact-btn">
+          <i class="fa-regular fa-message"></i> Contact Page
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- FLOATING WHATSAPP -->
+  <a href="https://wa.me/923196180549" target="_blank" class="floating-btn" title="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-col">
+        <h3>Black <span>Vibes</span></h3>
+        <p>Premium women's fashion for the modern Pakistani woman who dares to stand out.</p>
+        <div class="social-links" style="margin-top:24px;">
+          <a href="https://wa.me/923196180549" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          <a href="https://www.instagram.com/black.vibes.25/" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@aliyansam3" target="_blank"><i class="fab fa-tiktok"></i></a>
+          <a href="https://www.facebook.com/profile.php?id=61589344725862" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>Shop</h3>
+        <ul>
+          <li><a href="#">New Arrivals</a></li>
+          <li><a href="#">Best Sellers</a></li>
+          <li><a href="collection.html">Full Collection</a></li>
+          <li><a href="#">Sale</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Blogs</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3>Help</h3>
+        <ul>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="#">Size Guide</a></li>
+          <li><a href="#">Shipping Policy</a></li>
+          <li><a href="#">Returns</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Black Vibes — Crafted with passion in Pakistan</p>
+      <p>WhatsApp: +92-319-6180549 &nbsp;|&nbsp; cs@blackvibes.com</p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // ===== LOADER =====
+    window.onload = () => {
+      setTimeout(() => {
+        const loader = document.getElementById('loader');
+        loader.style.opacity = '0';
+        setTimeout(() => loader.style.display = 'none', 1000);
+      }, 1800);
+    };
+
+    // ===== CUSTOM CURSOR =====
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX - 10 + 'px';
+      cursor.style.top  = e.clientY - 10 + 'px';
+    });
+
+    // ===== THEME TOGGLE =====
+    const html = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const savedTheme = localStorage.getItem('bv-theme') || 'light';
+    html.setAttribute('data-theme', savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+      const current = html.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('bv-theme', next);
+    });
+
+    // ===== FAQ ACCORDION =====
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+
+        // Close all in the same group
+        item.closest('.faq-group').querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+
+        // Toggle clicked item
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // ===== FAQ TABS =====
+    const tabs = document.querySelectorAll('.faq-tab');
+    const groups = document.querySelectorAll('.faq-group');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const target = tab.getAttribute('data-target');
+        groups.forEach(g => {
+          g.classList.remove('active');
+          if (g.id === target) g.classList.add('active');
+        });
+      });
+    });
+
+    // ===== SCROLL REVEAL =====
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
